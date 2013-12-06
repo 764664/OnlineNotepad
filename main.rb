@@ -9,9 +9,6 @@ set :port, PORT
 #Read string from local file.
 contentfile = File.new("content", "r+")
 content = contentfile.read()
-if content == ""
-	content = "Empty."
-end
 
 get '/' do
   	erb :index, :locals => { :content => content }
@@ -19,5 +16,6 @@ end
 
 post '/' do
 	content = params[:content]
+	contentfile.seek(0)
 	contentfile.print(content)
 end
