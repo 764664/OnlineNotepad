@@ -6,11 +6,18 @@ require './config.rb'
 set :bind, '0.0.0.0'
 set :port, PORT
 
+#Read string from local file.
+contentfile = File.new("content", "r+")
+content = contentfile.read()
+if content == ""
+	content = "Empty."
+end
+
 get '/' do
-  	erb :index
+  	erb :index, :locals => { :content => content }
 end
 
 post '/' do
 	content = params[:content]
-	puts content
+	contentfile.print(content)
 end
